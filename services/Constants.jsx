@@ -1,9 +1,12 @@
-import { LayoutDashboard,
-    Settings,
-    WalletCards,
-    List,
-    Calender
- } from "lucide-react"
+// import { LayoutDashboard,
+//     Settings,
+//     WalletCards,
+//     List,
+//     Calender
+//  } from "lucide-react"
+
+import { LayoutDashboard, Settings, WalletCards, List, Calendar } from 'lucide-react';
+
 
 export const SideBarOptions =[
     {
@@ -13,7 +16,7 @@ export const SideBarOptions =[
     },
     {
         name:"Schedule Interview",
-        icon:Calender,
+        icon:Calendar,
         path:"/schedule-interview",
     },
     {

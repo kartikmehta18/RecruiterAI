@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import url('https://fonts.googleapis.com/css2?family=Caramel&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -143,4 +145,7 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+@theme {
+  --font-caramel: 'Caramel', cursive;
 }
