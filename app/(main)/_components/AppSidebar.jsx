@@ -25,7 +25,7 @@ console.log(path);
             <SidebarHeader className="flex items-center mt-5 flex-col">
                 <img src={'./logo.png'} alt='logo' width={200} height={100} className='w-[150px]' />
 
-                <Button className="w-full mt-5">
+                <Button className="w-full mt-5 cursor-pointer">
                     <Plus />
                     Create New Interview
                 </Button>
