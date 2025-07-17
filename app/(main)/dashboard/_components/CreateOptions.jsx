@@ -15,7 +15,7 @@ function CreateOptions() {
 
       <div className='p-5 rounded-xl bg-white w-full border'>
         <Phone className='p-3 text-primary bg-blue-50 rounded-lg h-12 w-12' />
-        <h2 className='font-bold' >Create Phone Screening <sapn className='text-primary italic font-caramel'>Call</sapn></h2>
+        <h2 className='font-bold' >Create Phone Screening <span className='text-primary italic font-caramel'>Call</span></h2>
         <p className="text-gray-500"> Schedule Phone Screening with Candidates</p>
 
       </div>

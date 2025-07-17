@@ -19,8 +19,13 @@ export async function POST(req) {
     });
 
     const completion = await openai.chat.completions.create({
-      model: "google/gemini-2.0-flash-exp:free",
-      messages: [{ role: "user", content: FINAL_PROMPT }],
+      // model: "google/gemini-2.0-flash-exp:free",
+      model: "openai/gpt-3.5-turbo",
+      
+      messages: [
+        { role: "user", content: FINAL_PROMPT }
+      ],
+   
       //   messages: [{ role: "user", content: "Say this is a test" }],
     });
     console.log(completion.choices[0].message);
