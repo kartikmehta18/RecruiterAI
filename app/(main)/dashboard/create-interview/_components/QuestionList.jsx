@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from "sonner";
 import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"
+import QuestionListContainer from './QuestionListContainer';
 
 function QuestionList({ formData }) {
   const [loading, setLoading] = useState(false);
@@ -68,6 +69,9 @@ function QuestionList({ formData }) {
       {/* <div>QuestionList</div> */}
 
       {questions?.length > 0 &&
+
+      <div>
+        {/* <h2 className='font-bold text-lg'>Generated Interview question</h2>
         <div className="p-5 border border-gray-200 rounded-xl">
           {questions.map((item, index) => (
             <div key={index} className="p-3 border border-gray-200 rounded-2xl">
@@ -75,10 +79,12 @@ function QuestionList({ formData }) {
               <h2 className="italic font-caramel text-primary">{item.type}</h2>
             </div>
           ))}
+        </div> */}
         </div>
       }
-      <Button onClick={()=>{}}>
-        <PlusIcon />
+      <QuestionListContainer questions={questions} />
+      <Button className="flex justify-end mt-10" onClick={()=>{}}>
+       Finish
       </Button>
 
 
