@@ -11,7 +11,7 @@
 //    const [formData , setFormData]= useState();
 
 //     const onHandleInputChange=(field, value)=>{
-//         setFormData(prev=>({
+    //         setFormData(prev=>({
 //             ...prev,
 //             [field]: value
 //         }))
@@ -19,7 +19,7 @@
 //     }
 
 //     return (
-
+    
 //         <div className="mt-10 px-10 md:px-24 lg:px-44 xl:px-56">
 //             <div className="flex gap-5 item-center">
 //                 <ArrowLeft onClick={()=>router.back()} className="mt-[6px] cursor-pointer hover:rotate-20 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
@@ -42,11 +42,12 @@ import { useRouter } from "next/navigation";
 import FormContainer from './_components/FormContainer';
 import QuestionList from './_components/QuestionList';
 import { toast } from "sonner"
+import InterviewLink from './_components/InterviewLink';
 
 
 function Page() {
     const router = useRouter();
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(3); /// remove this
     const [formData, setFormData] = useState({});
 
     const onHandleInputChange = (field, value) => {
@@ -80,57 +81,9 @@ function Page() {
             <Progress value={step * 33.33} className="my-5" />
             {step == 1 ? <FormContainer onHandleInputChange={onHandleInputChange}
                 GoToNext={() => onGoToNext()} />
-                : step == 2 ? <QuestionList formData={formData}/> : null}
+                : step == 2 ? <QuestionList formData={formData}/> : step== 3 ? <InterviewLink /> :null}
         </div>
     );
 }
 
 export default Page;
-// "use client";
-// import React, { useState, useEffect } from 'react';
-// import { Progress } from "@/components/ui/progress";
-// import { ArrowLeft } from "lucide-react";
-// import { useRouter } from "next/navigation";
-// import FormContainer from './_components/FormContainer';
-
-// function Page() {
-//     const router = useRouter();
-//     const [step, setStep] = useState(1);
-//     const [formData, setFormData] = useState({});
-
-//     const onHandleInputChange = (field, value) => {
-//         setFormData((prev) => ({
-//             ...prev,
-//             [field]: value
-//         }));
-//     };
-
-//     // Update step based on formData
-//     useEffect(() => {
-//         // You can decide when to increment step, for example when all required fields are filled
-//         if (formData.jobPosition) {
-//             setStep(2);  // Increment step based on form data
-//         }
-//         if ( formData.jobDescription) {
-//             setStep(3);  // Increment step based on form data
-//         }
-//         if ( formData.types) {
-//             setStep(4);  // Increment step based on form data
-//         }
-
-//         console.log(formData);  // Logs updated formData after each change
-//     }, [formData]);  // Will trigger when formData changes
-
-//     return (
-//         <div className="mt-10 px-10 md:px-24 lg:px-44 xl:px-56">
-//             <div className="flex gap-5 item-center">
-//                 <ArrowLeft onClick={() => router.back()} className="mt-[6px] cursor-pointer hover:rotate-20 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
-//                 <h2 className="font-bold text-2xl">Create New <span className="italic font-caramel text-primary"> Interview</span></h2>
-//             </div>
-//             <Progress value={step * 33.33} className="my-5" />
-//             <FormContainer onHandleInputChange={onHandleInputChange} />
-//         </div>
-//     );
-// }
-
-// export default Page;

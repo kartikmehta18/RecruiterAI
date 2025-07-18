@@ -2,13 +2,18 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { toast } from "sonner";
-import { Loader2Icon, PlusIcon } from "lucide-react";
+import { Loader2Icon, PlusIcon,Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import QuestionListContainer from './QuestionListContainer';
+import { supabase } from './../../../../../services/supabaseClient';
+import { useUser } from "@/app/provider"
+import { v4 as uuidv4 } from 'uuid';
 
 function QuestionList({ formData }) {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const { user } = useUser();
+  const [saveloading, setSaveLoading] = useState(false);
 
 
   useEffect(() => {
@@ -56,6 +61,26 @@ function QuestionList({ formData }) {
     }
   }
 
+  const onFinish = async () => {
+    setSaveLoading(true);
+    const interview_id = uuidv4();
+    const { data, error } = await supabase
+      .from('Interviews')
+      .insert([
+        {
+          ...formData,
+          questionList:questions,
+          userEmail: user?.email,
+          interview_id: interview_id,
+        },
+
+      ])
+      .select()
+      setSaveLoading(false);
+    console.log("okii", data);
+
+  }
+
 
   return (
     <>
@@ -70,8 +95,8 @@ function QuestionList({ formData }) {
 
       {questions?.length > 0 &&
 
-      <div>
-        {/* <h2 className='font-bold text-lg'>Generated Interview question</h2>
+        <div>
+          {/* <h2 className='font-bold text-lg'>Generated Interview question</h2>
         <div className="p-5 border border-gray-200 rounded-xl">
           {questions.map((item, index) => (
             <div key={index} className="p-3 border border-gray-200 rounded-2xl">
@@ -80,11 +105,12 @@ function QuestionList({ formData }) {
             </div>
           ))}
         </div> */}
+          <QuestionListContainer questions={questions} />
         </div>
       }
-      <QuestionListContainer questions={questions} />
-      <Button className="flex justify-end mt-10" onClick={()=>{}}>
-       Finish
+      <Button className="flex justifi-end mt-10 " onClick={() => { onFinish()  }}  disabled={saveloading}>
+        {saveLoading && <Loader2 className="animate-spin" /> }
+        Finish
       </Button>
 
 
