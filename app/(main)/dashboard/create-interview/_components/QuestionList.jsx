@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { toast } from "sonner";
-import { Loader2Icon, PlusIcon,Loader2 } from "lucide-react";
+import { Loader2Icon, PlusIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import QuestionListContainer from './QuestionListContainer';
 import { supabase } from './../../../../../services/supabaseClient';
 import { useUser } from "@/app/provider"
 import { v4 as uuidv4 } from 'uuid';
 
-function QuestionList({ formData }) {
+function QuestionList({ formData,onCreateLink }) {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const { user } = useUser();
@@ -69,15 +69,16 @@ function QuestionList({ formData }) {
       .insert([
         {
           ...formData,
-          questionList:questions,
+          questionList: questions,
           userEmail: user?.email,
           interview_id: interview_id,
         },
 
       ])
       .select()
-      setSaveLoading(false);
+    setSaveLoading(false);
     console.log("okii", data);
+    onCreateLink(interview_id)
 
   }
 
@@ -108,9 +109,9 @@ function QuestionList({ formData }) {
           <QuestionListContainer questions={questions} />
         </div>
       }
-      <Button className="flex justifi-end mt-10 " onClick={() => { onFinish()  }}  disabled={saveloading}>
-        {saveLoading && <Loader2 className="animate-spin" /> }
-        Finish
+      <Button className="flex justifi-end mt-10 " onClick={() => { onFinish() }} disabled={saveloading}>
+        {saveLoading && <Loader2 className="animate-spin" />}
+        Create Interview Link & Finish
       </Button>
 
 

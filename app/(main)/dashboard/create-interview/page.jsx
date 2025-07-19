@@ -11,7 +11,7 @@
 //    const [formData , setFormData]= useState();
 
 //     const onHandleInputChange=(field, value)=>{
-    //         setFormData(prev=>({
+//         setFormData(prev=>({
 //             ...prev,
 //             [field]: value
 //         }))
@@ -19,7 +19,7 @@
 //     }
 
 //     return (
-    
+
 //         <div className="mt-10 px-10 md:px-24 lg:px-44 xl:px-56">
 //             <div className="flex gap-5 item-center">
 //                 <ArrowLeft onClick={()=>router.back()} className="mt-[6px] cursor-pointer hover:rotate-20 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110" />
@@ -49,6 +49,7 @@ function Page() {
     const router = useRouter();
     const [step, setStep] = useState(3); /// remove this
     const [formData, setFormData] = useState({});
+    const [interviewId, setInterviewId] = useState();
 
     const onHandleInputChange = (field, value) => {
         setFormData((prev) => ({
@@ -56,6 +57,10 @@ function Page() {
             [field]: value
         }));
     };
+
+
+
+
 
     useEffect(() => {
         // Increment step by 1 each time formData changes
@@ -72,6 +77,14 @@ function Page() {
     }
 
 
+    const onCreateLink = (interview_id) => {
+        setInterviewId(interview_id);
+        setStep(step + 1);
+    }
+
+
+
+
     return (
         <div className="mt-10 px-10 md:px-24 lg:px-44 xl:px-56">
             <div className="flex gap-5 item-center">
@@ -81,7 +94,12 @@ function Page() {
             <Progress value={step * 33.33} className="my-5" />
             {step == 1 ? <FormContainer onHandleInputChange={onHandleInputChange}
                 GoToNext={() => onGoToNext()} />
-                : step == 2 ? <QuestionList formData={formData}/> : step== 3 ? <InterviewLink /> :null}
+                : step == 2 ?
+                 <QuestionList formData={formData} onCreateLink={(interview_id) => onCreateLink()} /> : 
+                 step == 3 ? 
+                 <InterviewLink interview_id={interviewId}
+                 fromData={formData}
+                 /> : null}
         </div>
     );
 }
