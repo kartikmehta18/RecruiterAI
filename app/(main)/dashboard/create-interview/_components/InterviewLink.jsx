@@ -3,11 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { toast } from "sonner"
 import { Copy, Clock, List, Share2, Mail, Slack, MessageCircleMore, ArrowLeft, Plus } from "lucide-react"
-function InterviewLink({ interviewId, formData }) {
+function InterviewLink({ intervie_id, formData }) {
+  const url = process.env.NEXT_PUBLIC_BASE_URL + '/' + intervie_id;
 
   const GetIntervireUrl = () => {
-    const url = process.env.NEXT_PUBLIC_BASE_URL + '/' + interviewId;
     return url;
   }
 
@@ -32,6 +33,10 @@ function InterviewLink({ interviewId, formData }) {
     }
   };
 
+  const onCopyLink = async () => {
+    await navigator.clipboard.writeText(url);
+    toast("🔗 Link copied to clipboard!");
+  }
 
 
   return (
@@ -51,7 +56,7 @@ function InterviewLink({ interviewId, formData }) {
 
         <div className=" mt-3 flex item-center gap-3">
           <Input className=" border border-blue-100 rounded-lg" defaultValue={GetIntervireUrl()} disabled={true} />
-          <Button className="cursor-pointer "><Copy /> Copy</Button>
+          <Button onClick={() => onCopyLink()} className="cursor-pointer "><Copy /> Copy</Button>
         </div>
         <hr className=" bg-gray-200 my-5" />
 
@@ -64,10 +69,7 @@ function InterviewLink({ interviewId, formData }) {
             <List className="h-4 w-4" />
             10 Questions {formData?.duration}
           </h2>
-          {/* <h2 className="text-sm text-gray-500 flex gap-2">
-    <Calendar className="h-4 w-4" />
-    30 Min {formData?.duration}
-  </h2> */}
+
           <Button
             onClick={handleShare}
             className="flex justify-center gap-4 cursor-pointer"
@@ -99,11 +101,14 @@ function InterviewLink({ interviewId, formData }) {
 
       <div className="flex justify-between w-full mt-4">
 
-        <Link href  ={'/dashboard'}>
+        <Link href={'/dashboard'}>
           <Button variant={'outline'} className=" cursor-pointer"> <ArrowLeft /> Back to Dashboard</Button>
         </Link>
+        <Link href={'/dashboard/create-interview'}>
+          <Button className=" cursor-pointer"> <Plus /> Create New Interview</Button>
+        </Link>
 
-        <Button className=" cursor-pointer"> <Plus /> create</Button>
+
       </div>
     </div>
   )
