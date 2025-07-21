@@ -13,7 +13,7 @@ function QuestionList({ formData,onCreateLink }) {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const { user } = useUser();
-  const [saveloading, setSaveLoading] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
 
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function QuestionList({ formData,onCreateLink }) {
           <QuestionListContainer questions={questions} />
         </div>
       }
-      <Button className="flex justifi-end mt-10 " onClick={() => { onFinish() }} disabled={saveloading}>
+      <Button className="flex justifi-end mt-10 " onClick={() => { onFinish() }} disabled={saveLoading}>
         {saveLoading && <Loader2 className="animate-spin" />}
         Create Interview Link & Finish
       </Button>
