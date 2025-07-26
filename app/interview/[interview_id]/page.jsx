@@ -59,7 +59,7 @@
 //         router.push(`/interview/${interview_id}/start`)
 //         setLoading(false);
 //     }
-    
+
 
 
 //     return (
@@ -173,7 +173,7 @@ function Interview() {
 
             setInterviewInfo({
                 userName: userName,
-                interviewData:Interviews[0],
+                interviewData: Interviews[0],
             })
             // setInterviewInfo(Interviews[0])
             router.push(`/interview/${interview_id}/start`)
