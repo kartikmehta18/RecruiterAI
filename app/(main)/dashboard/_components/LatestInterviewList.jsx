@@ -1,11 +1,30 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState ,useEffect } from 'react'
 import { Video } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import { supabase } from '@/services/supabaseClient';
+import {useUser} from '@/app/provider'
+import InterviewCard from "./InterviewCard"
+
 
 function LatestInterviewList() {
     const [interviewList, setInterviewList] = useState([]);
+    const {user} =useUser();
+
+
+    useEffect(()=>{
+         GetinterviewList();
+    },[user ])
+    const GetinterviewList = async () => {
+        let { data: Interviews, error } = await supabase
+            .from('Interviews')
+            .select('*')
+            .eq('userEmail',user?.email)
+            console.log(Interviews);
+            setInterviewList(Interviews);
+    }
+   
 
     return (
         <div className="my-5">
@@ -16,9 +35,18 @@ function LatestInterviewList() {
                     <Video className="h-10  w-10 text-primary" />
                     <h2>You dont have any interview created </h2>
                     <Link href="/dashboard/create-interview">
-                    <Button className="cursor-pointer hover:animate-pulse">+ Create New Interview</Button>
+                        <Button className="cursor-pointer hover:animate-pulse">+ Create New Interview</Button>
                     </Link>
                 </div>}
+
+            {interviewList && 
+            <div>
+                        {interviewList.map((Interviews,index)=>(
+                            <InterviewCard Interviews={Interviews} key={index} />
+                        ))}
+
+            </div>
+            }
 
 
 

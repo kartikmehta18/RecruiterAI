@@ -229,6 +229,8 @@ function StartInterview() {
 
     return () => {
       vapi.removeAllListeners();
+      vapi.off("message",handleMessage);
+      vapi.off("call-start");
     };
   }, []);
 
@@ -303,7 +305,7 @@ Be friendly, concise, adaptive, and keep it focused on React.
         .select();
       console.log("Feedback saved:", data);
       toast("✅ Feedback Generated Successfully");
-      router.replace('/interview/'+interview_id+'/completed');
+      router.replace('/interview/' + interview_id + '/completed');
     } catch (err) {
       console.error("Feedback generation failed:", err);
       toast("❌ Failed to generate feedback");

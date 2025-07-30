@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 function CreateOptions() {
   return (
-    <div className='grid grid-cols-2 gap-20 mt-5'>
+    <div className='grid grid-cols-1 gap-10  lg:grid-cols-2 lg:gap-20 md:grid-cols-2 md:gap-20 xl:grid-cols-2 xl:gap-20  mt-5'>
       <Link href="/dashboard/create-interview">
         <div className='p-5 rounded-xl bg-white w-full border'>
           <Video className='p-3 text-primary bg-blue-50 rounded-lg h-12 w-12' />
