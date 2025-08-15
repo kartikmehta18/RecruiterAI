@@ -91,8 +91,20 @@ function QuestionList({ formData,onCreateLink }) {
 
       ])
       .select()
-    setSaveLoading(false);
-    console.log("okii", data);
+
+      //update user 
+       
+const userUpdate = await supabase
+  .from('Users')
+  .update({ credits: Number(user?.credits-1) })
+  .eq('email', user?.email)
+  .select()
+          
+  console.log("userUpdate" ,userUpdate);
+
+
+  setSaveLoading(false);
+  console.log("okii", data);
     onCreateLink(interview_id)
 
   }
