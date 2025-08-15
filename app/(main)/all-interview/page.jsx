@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import { supabase } from '@/services/supabaseClient';
 import { useUser } from '@/app/provider'
-import InterviewCard from "./InterviewCard"
+import InterviewCard from './../dashboard/_components/InterviewCard';
 
-
-function LatestInterviewList() {
+function page() {
     const [interviewList, setInterviewList] = useState([]);
     const { user } = useUser();
 
@@ -21,7 +20,7 @@ function LatestInterviewList() {
             .from('Interviews')
             .select('*')
             .eq('userEmail', user?.email)
-            .order('id',{ascending:false})
+            .order('id', { ascending: false })
         console.log(Interviews);
         setInterviewList(Interviews);
     }
@@ -29,7 +28,7 @@ function LatestInterviewList() {
 
     return (
         <div className="my-5">
-            <h2 className='font-bold text-2xl'>Previously Created Interviews</h2>
+            <h2 className='font-bold text-2xl'> All Previously Created Interviews</h2>
 
             {interviewList?.length == 0 &&
                 <div className=" p-5 flex flex-col items-center gap-3 border bg-blue-50 border-blue-200 rounded-xl mt-5">
@@ -53,6 +52,7 @@ function LatestInterviewList() {
 
         </div>
     )
+
 }
 
-export default LatestInterviewList
+export default page
