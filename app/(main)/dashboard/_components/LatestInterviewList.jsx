@@ -1,30 +1,30 @@
 "use client"
-import React, { useState ,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Video } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import { supabase } from '@/services/supabaseClient';
-import {useUser} from '@/app/provider'
+import { useUser } from '@/app/provider'
 import InterviewCard from "./InterviewCard"
 
 
 function LatestInterviewList() {
     const [interviewList, setInterviewList] = useState([]);
-    const {user} =useUser();
+    const { user } = useUser();
 
 
-    useEffect(()=>{
-         GetinterviewList();
-    },[user ])
+    useEffect(() => {
+        GetinterviewList();
+    }, [user])
     const GetinterviewList = async () => {
         let { data: Interviews, error } = await supabase
             .from('Interviews')
             .select('*')
-            .eq('userEmail',user?.email)
-            console.log(Interviews);
-            setInterviewList(Interviews);
+            .eq('userEmail', user?.email)
+        console.log(Interviews);
+        setInterviewList(Interviews);
     }
-   
+
 
     return (
         <div className="my-5">
@@ -39,13 +39,13 @@ function LatestInterviewList() {
                     </Link>
                 </div>}
 
-            {interviewList && 
-            <div>
-                        {interviewList.map((Interviews,index)=>(
-                            <InterviewCard Interviews={Interviews} key={index} />
-                        ))}
+            {interviewList &&
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                    {interviewList.map((Interviews, index) => (
+                        <InterviewCard Interviews={Interviews} key={index} />
+                    ))}
 
-            </div>
+                </div>
             }
 
 
