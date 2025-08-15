@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Button } from "@/components/ui/button";
 import { Copy, Share2, ArrowRight } from "lucide-react"
 import { toast } from "sonner";
+import Link from "next/link"
 function InterviewCard({ Interviews, viewDetail = false }) {
   const url = process.env.NEXT_PUBLIC_BASE_URL + '/' + Interviews?.interview_id;
   const onCopyLink = async () => {
@@ -48,9 +49,11 @@ function InterviewCard({ Interviews, viewDetail = false }) {
         <Button className="cursor-pointer" onClick={handleShare}> <Share2 className="mr-2" /> Send</Button>
       </div>
         :
+        <Link href={'/schedule-interview/' +Interviews?.interview_id + "/details"}>
         <div className=" flex justify-end">
           <Button variant="outline" className="w-full cursor-pointer"> <ArrowRight />View Detail</Button>
         </div>
+        </Link>
 
       }
 

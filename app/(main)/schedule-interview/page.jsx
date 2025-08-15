@@ -27,7 +27,7 @@ function ScheduleInterview() {
           "jobPosition, interviewDuration, interview_id, interview-feedback(userEmail)"
         ) // rename to your actual relation name
         .eq("userEmail", user?.email)
-        .order("interview_id", { ascending: false });
+        .order("id", { ascending: false });
 
       if (error) {
         console.error("Supabase error:", error);
