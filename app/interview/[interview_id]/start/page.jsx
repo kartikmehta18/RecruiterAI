@@ -187,6 +187,9 @@ import AlertConfirmation from './_components/AlertConfirmation';
 import TimerComponent from './_components/TimerCmponent';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { supabase } from './../../../../services/supabaseClient';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 function StartInterview() {
   const { interviewInfo } = useContext(InterviewDataContext);
@@ -194,6 +197,10 @@ function StartInterview() {
   const [activeUser, setActiveUser] = useState(false);
   const [isInterviewActive, setIsInterviewActive] = useState(false);
   const [conversation, setConversation] = useState();
+  const { interview_id } = useParams();
+  const router = useRouter();
+
+
 
   useEffect(() => {
     vapiRef.current = new Vapi(process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY);
@@ -222,6 +229,8 @@ function StartInterview() {
 
     return () => {
       vapi.removeAllListeners();
+      vapi.off("message",handleMessage);
+      vapi.off("call-start");
     };
   }, []);
 
@@ -281,6 +290,22 @@ Be friendly, concise, adaptive, and keep it focused on React.
       const Content = result.data.content;
       const FINAL_CONTENT = Content.replace('```json', '').replace('```', '');
       console.log("Feedback:", FINAL_CONTENT);
+
+      const { data, error } = await supabase
+        .from("interview-feedback")
+        .insert([{
+          userName: interviewInfo.userName,
+          userEmail: interviewInfo.userEmail,
+          interview_id: interview_id,
+          feedback: JSON.parse(FINAL_CONTENT),
+          recommended: false
+
+
+        }])
+        .select();
+      console.log("Feedback saved:", data);
+      toast("✅ Feedback Generated Successfully");
+      router.replace('/interview/' + interview_id + '/completed');
     } catch (err) {
       console.error("Feedback generation failed:", err);
       toast("❌ Failed to generate feedback");

@@ -5,9 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner"
 import { Copy, Clock, List, Share2, Mail, Slack, MessageCircleMore, ArrowLeft, Plus } from "lucide-react"
-function InterviewLink({ intervie_id, formData }) {
-  const url = process.env.NEXT_PUBLIC_BASE_URL + '/' + intervie_id;
-
+function InterviewLink({ interview_id, formData }) {
+  const url = process.env.NEXT_PUBLIC_BASE_URL + '/' + interview_id;
+//or Interviews.interview_id
   const GetIntervireUrl = () => {
     return url;
   }

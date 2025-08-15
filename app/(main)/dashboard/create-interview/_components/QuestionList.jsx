@@ -33,15 +33,30 @@ function QuestionList({ formData,onCreateLink }) {
       console.log("Generated Questions:", result.data);
       const Content = result.data.content;
       const FINAL_CONTENT = Content.replace('```json', '').replace('```', '');
-      // TEMPORARY WORKAROUND: Convert JS-like object string to valid JSON
+      // Robust workaround: normalize JS-like object/array strings to valid JSON
       let fixedContent = FINAL_CONTENT.trim();
-      // If it starts with 'interviewQuestions:', wrap it in curly braces
-      if (fixedContent.startsWith('interviewQuestions')) {
+
+      // Common AI outputs can include patterns like:
+      // {interviewQuestions = [ ... ]}  or  interviewQuestions = [ ... ]
+      // Normalize unquoted property names with '=' or ':' to valid JSON property names.
+      // 1) Replace occurrences like `name =` or `name=` with `"name":`
+      fixedContent = fixedContent.replace(/([a-zA-Z0-9_]+)\s*=\s*/g, '"$1":');
+      // 2) Replace unquoted property names that use colon (name:) with quoted names
+      fixedContent = fixedContent.replace(/([a-zA-Z0-9_]+)\s*:/g, '"$1":');
+      // 3) Convert single quotes to double quotes
+      fixedContent = fixedContent.replace(/'([^']*)'/g, '"$1"');
+      // 4) Remove stray backticks or markdown fences still present
+      fixedContent = fixedContent.replace(/```/g, '');
+      // 5) Remove trailing commas before closing brackets/braces
+      fixedContent = fixedContent.replace(/,\s*([]}])/g, '$1');
+
+      // Ensure the string is a JSON object. If it looks like it starts with a property
+      // (e.g. "interviewQuestions": [...] ) but not wrapped, add braces.
+      const looksLikeObjectBody = /^\s*"[a-zA-Z0-9_]+"\s*:\s*/.test(fixedContent);
+      if (looksLikeObjectBody && !/^\s*\{/.test(fixedContent)) {
         fixedContent = `{${fixedContent}}`;
       }
-      fixedContent = fixedContent
-        .replace(/([a-zA-Z0-9_]+):/g, '"$1":') // property names
-        .replace(/'([^']+)'/g, '"$1"');        // single-quoted strings
+
       let parsedQuestions = [];
       try {
         const parsed = JSON.parse(fixedContent);
@@ -76,8 +91,20 @@ function QuestionList({ formData,onCreateLink }) {
 
       ])
       .select()
-    setSaveLoading(false);
-    console.log("okii", data);
+
+      //update user 
+       
+const userUpdate = await supabase
+  .from('Users')
+  .update({ credits: Number(user?.credits-1) })
+  .eq('email', user?.email)
+  .select()
+          
+  console.log("userUpdate" ,userUpdate);
+
+
+  setSaveLoading(false);
+  console.log("okii", data);
     onCreateLink(interview_id)
 
   }

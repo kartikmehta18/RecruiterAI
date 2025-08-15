@@ -43,6 +43,7 @@ import FormContainer from './_components/FormContainer';
 import QuestionList from './_components/QuestionList';
 import { toast } from "sonner"
 import InterviewLink from './_components/InterviewLink';
+import {useUser} from "@/app/provider"
 
 
 function Page() {
@@ -50,6 +51,7 @@ function Page() {
     const [step, setStep] = useState(1); /// remove this
     const [formData, setFormData] = useState({});
     const [interviewId, setInterviewId] = useState();
+    const {user}=useUser()
 
     const onHandleInputChange = (field, value) => {
         setFormData((prev) => ({
@@ -69,6 +71,13 @@ function Page() {
 
 
     const onGoToNext = () => {
+
+        if(user?.credits<=0)
+        {
+            toast(" 0 credit left")
+            return;
+        }
+
         if (!formData?.jobPosition || !formData?.jobDescription || formData.duration || !formData?.types) {
             return toast("❌ Please enter alldetails");
         }
