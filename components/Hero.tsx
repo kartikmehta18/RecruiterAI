@@ -1657,7 +1657,7 @@ const InteractiveHero: React.FC = () => {
       <main className="flex-grow flex flex-col items-center justify-center text-center px-4 pt-8 pb-16 relative z-10">
         <motion.div variants={bannerVariants} initial="hidden" animate="visible" className="mb-6">
           <ShinyText
-            text="Announcing our $15M Series A"
+            text="Best Recruting Platform"
             className="bg-primary/10 border border-primary text-primary px-4 py-1 rounded-full text-xs sm:text-sm font-medium cursor-pointer hover:border-primary/50 transition-colors"
           />
         </motion.div>
@@ -1719,12 +1719,12 @@ const InteractiveHero: React.FC = () => {
             whileTap={{ scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
           >
-            See Nexus in action
+            See in action
           </motion.button>
         </motion.form>
 
         <motion.p variants={trialTextVariants} initial="hidden" animate="visible" className="text-xs text-gray-500 mb-10">
-          Free 14 day trial
+          4 credits free trial
         </motion.p>
 
         <motion.div
@@ -1733,7 +1733,7 @@ const InteractiveHero: React.FC = () => {
           animate="visible"
           className="flex flex-col items-center justify-center space-y-2 mb-10"
         >
-          <span className="text-xs uppercase text-gray-500 tracking-wider font-medium">Works with</span>
+          <span className="text-xs uppercase text-gray-500 tracking-wider font-medium">Our Partners</span>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400">
             <span className="flex items-center whitespace-nowrap">
               Slack&nbsp;&nbsp;
@@ -1905,6 +1905,9 @@ const InteractiveHero: React.FC = () => {
             loading="lazy"
           />
         </motion.div>
+        <div className="text-md text-black my-8">
+          Made with ❤️& ☕by <a className="text-primary font-caramel" target="_blank" href="kartikmehta18.xyz">kartimehta18.xyz</a>
+        </div>
       </main>
     </div>
   );
