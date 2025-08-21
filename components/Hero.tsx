@@ -1597,12 +1597,12 @@ const InteractiveHero: React.FC = () => {
           </div>
 
           <div className="flex items-center flex-shrink-0 space-x-4 lg:space-x-6">
-            <NavLink href="http://localhost:3000/auth" className="hidden md:inline-block">
+            <NavLink href="/auth" className="hidden md:inline-block">
               Sign in
             </NavLink>
 
             <motion.a
-              href="http://localhost:3000/dashboard"
+              href="/dashboard"
               className="bg-primary text-white px-4 py-[6px] rounded-md text-sm font-semibold hover:bg-opacity-90 transition-colors duration-200 whitespace-nowrap shadow-sm hover:shadow-md"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
