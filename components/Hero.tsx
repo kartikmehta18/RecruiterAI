@@ -1582,7 +1582,7 @@ const InteractiveHero: React.FC = () => {
       >
         <nav className="flex justify-between items-center max-w-screen-xl mx-auto h-[70px]">
           <div className="flex items-center ">
-            <img src="./logo.png" alt=" Logo" className="" />
+            <img src="./logo.png" alt=" Logo" className="h-10 w-full" />
           </div>
 
           <div className="hidden md:flex items-center justify-center flex-grow space-x-6 lg:space-x-8 px-4">
@@ -1612,7 +1612,7 @@ const InteractiveHero: React.FC = () => {
             </motion.a>
 
             <motion.button
-              className="md:hidden text-gray-300 hover:text-white z-50"
+              className="md:hidden text-black hover:text-primary z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
               whileHover={{ scale: 1.1 }}
@@ -1640,15 +1640,7 @@ const InteractiveHero: React.FC = () => {
                 <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
                   Customers
                 </NavLink>
-                <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
-                  Channels
-                </NavLink>
-                <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
-                  Resources
-                </NavLink>
-                <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
-                  Docs
-                </NavLink>
+               
                 <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
                   Pricing
                 </NavLink>
@@ -1666,7 +1658,7 @@ const InteractiveHero: React.FC = () => {
         <motion.div variants={bannerVariants} initial="hidden" animate="visible" className="mb-6">
           <ShinyText
             text="Announcing our $15M Series A"
-            className="bg-[#1a1a1a] border border-gray-700 text-primary px-4 py-1 rounded-full text-xs sm:text-sm font-medium cursor-pointer hover:border-primary/50 transition-colors"
+            className="bg-primary/10 border border-primary text-primary px-4 py-1 rounded-full text-xs sm:text-sm font-medium cursor-pointer hover:border-primary/50 transition-colors"
           />
         </motion.div>
 
@@ -1702,7 +1694,7 @@ const InteractiveHero: React.FC = () => {
           animate="visible"
           className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto mb-8"
         >
-          Automate sourcing, screening, and candidate engagement with AI – so you can
+          Automate sourcing, screening, and candidate engagement with AI  so you
   spend less time on repetitive tasks and more time hiring the right people.
         </motion.p>
 
