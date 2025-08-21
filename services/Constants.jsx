@@ -105,7 +105,7 @@ for hire or not with msg. Give me response in JSON format
          experince:7
       },
       summery:<in 3 Line>,
-      Recommendation:"",
+      Recommendation:"" (in "Yes/No") ,
       RecommendationMsg:""
    }
 }`
