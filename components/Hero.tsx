@@ -833,9 +833,6 @@ import React, {
   type FormEvent,
   type SVGProps,
 } from "react";
-import { useUser } from "@/app/provider";
-import { supabase } from "@/services/supabaseClient";
-import DatabaseWithRestApi from "@/components/ui/database-with-rest-api";
 import {
   motion,
   AnimatePresence,
@@ -1285,12 +1282,6 @@ const InteractiveHero: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const { user } = useUser();
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  };
 
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -1606,37 +1597,19 @@ const InteractiveHero: React.FC = () => {
           </div>
 
           <div className="flex items-center flex-shrink-0 space-x-4 lg:space-x-6">
-            {user ? (
-              <>
-                <motion.button
-                  onClick={handleLogout}
-                  className="hidden md:inline-block text-gray-600 hover:text-primary transition-colors duration-200 text-sm font-medium"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  Logout
-                </motion.button>
-                <motion.a
-                  href="/dashboard"
-                  className="bg-primary text-white px-4 py-[6px] rounded-md text-sm font-semibold hover:bg-opacity-90 transition-colors duration-200 whitespace-nowrap shadow-sm hover:shadow-md"
-                  whileHover={{ scale: 1.03, y: -1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                >
-                  Dashboard
-                </motion.a>
-              </>
-            ) : (
-              <motion.a
-                href="/auth"
-                className="bg-primary text-white px-4 py-[6px] rounded-md text-sm font-semibold hover:bg-opacity-90 transition-colors duration-200 whitespace-nowrap shadow-sm hover:shadow-md"
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              >
-                Sign In
-              </motion.a>
-            )}
+            <NavLink href="/auth" className="hidden md:inline-block">
+              Sign in
+            </NavLink>
+
+            <motion.a
+              href="/dashboard"
+              className="bg-primary text-white px-4 py-[6px] rounded-md text-sm font-semibold hover:bg-opacity-90 transition-colors duration-200 whitespace-nowrap shadow-sm hover:shadow-md"
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            >
+              Dashboard
+            </motion.a>
 
             <motion.button
               className="md:hidden text-black hover:text-primary z-50"
@@ -1667,31 +1640,14 @@ const InteractiveHero: React.FC = () => {
                 <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
                   Customers
                 </NavLink>
-
+               
                 <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
                   Pricing
                 </NavLink>
                 <hr className="w-full border-t border-gray-700/50 my-2" />
-                {user ? (
-                  <>
-                    <NavLink href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                      Dashboard
-                    </NavLink>
-                    <button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                        handleLogout();
-                      }}
-                      className="text-red-500 hover:text-red-600 transition-colors cursor-pointer"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <NavLink href="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                    Sign In
-                  </NavLink>
-                )}
+                <NavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
+                  Sign in
+                </NavLink>
               </div>
             </motion.div>
           )}
@@ -1932,29 +1888,6 @@ const InteractiveHero: React.FC = () => {
             </span>
             <span className="flex items-center whitespace-nowrap">AND MORE</span>
           </div>
-        </motion.div>
-
-        {/* Database REST API Animation */}
-        <motion.div
-          variants={imageVariants}
-          initial="hidden"
-          animate="visible"
-          className="w-full flex justify-center mb-10"
-        >
-          <DatabaseWithRestApi
-            badgeTexts={{
-              first: "Screen",
-              second: "Interview",
-              third: "Evaluate",
-              fourth: "Hire",
-            }}
-            buttonTexts={{
-              first: "RecruiterAI",
-              second: "Interviews",
-            }}
-            title="AI-Powered Interview Pipeline"
-            circleText="AI"
-          />
         </motion.div>
 
         <motion.div

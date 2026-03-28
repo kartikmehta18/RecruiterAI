@@ -1,30 +1,15 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button } from '@/components/ui/button';
 import { supabase } from './../../services/supabaseClient';
-import { useRouter } from 'next/navigation';
-import { useUser } from '@/app/provider';
 
 
 
 function login() {
-  const router = useRouter();
-  const { user } = useUser();
-
-  // Redirect to dashboard if user is already logged in
-  useEffect(() => {
-    if (user) {
-      router.push('/dashboard');
-    }
-  }, [user, router]);
-
-  //use for sign in with google
+  //use for sign in with google 
   const asyncsignInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`
-      }
+      provider: 'google'
     })
 
     if (error) {
