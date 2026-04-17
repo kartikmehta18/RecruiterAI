@@ -848,6 +848,8 @@ import {
   type TargetAndTransition,
   type Variants,
 } from "framer-motion";
+import FeaturesSection from "./FeaturesSection";
+import IntegrationsSection from "./IntegrationsSection";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -1590,8 +1592,11 @@ const InteractiveHero: React.FC = () => {
         className="px-6 w-full md:px-10 lg:px-16 sticky top-0 z-30 backdrop-blur-md border-b"
       >
         <nav className="flex justify-between items-center max-w-screen-xl mx-auto h-[70px]">
+          
           <div className="flex items-center ">
+            <a href="/">
             <img src="./logo.png" alt=" Logo" className="h-10 w-full" />
+            </a>
           </div>
 
           <div className="hidden md:flex items-center justify-center flex-grow space-x-6 lg:space-x-8 px-4">
@@ -1957,7 +1962,7 @@ const InteractiveHero: React.FC = () => {
           />
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           variants={imageVariants}
           initial="hidden"
           animate="visible"
@@ -1971,7 +1976,14 @@ const InteractiveHero: React.FC = () => {
             className="w-full h-auto object-contain rounded-lg shadow-xl border border-gray-700/50"
             loading="lazy"
           />
-        </motion.div>
+        </motion.div> */}
+
+        {/* Features Section */}
+        <FeaturesSection />
+
+        {/* Integrations Section */}
+        <IntegrationsSection />
+
         {/* <div className="text-md text-black my-8">
           Made with ❤️& ☕by <a className="text-primary font-caramel" target="_blank" href="kartikmehta18.xyz">kartimehta18.xyz</a>
         </div> */}
