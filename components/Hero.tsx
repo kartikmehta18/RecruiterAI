@@ -850,6 +850,7 @@ import {
 } from "framer-motion";
 import FeaturesSection from "./FeaturesSection";
 import IntegrationsSection from "./IntegrationsSection";
+import TestimonialsSection from "./ui/testimonial-v2";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -1983,6 +1984,9 @@ const InteractiveHero: React.FC = () => {
 
         {/* Integrations Section */}
         <IntegrationsSection />
+
+        {/* Testimonials Section */}
+        <TestimonialsSection />
 
         {/* <div className="text-md text-black my-8">
           Made with ❤️& ☕by <a className="text-primary font-caramel" target="_blank" href="kartikmehta18.xyz">kartimehta18.xyz</a>
