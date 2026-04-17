@@ -15,24 +15,33 @@ import {
 
 
 function FeedbackDialog({ candidate }) {
-    const feedback = candidate?.feedback?.feedback
-    const fb = (feedback?.feedback ?? feedback) || {};
+    // Extract feedback from the candidate object - handle different possible structures
+    let feedbackData = candidate?.feedback;
 
-    // Make an array you can safely map
-    let summaryArray = [];
-    if (Array.isArray(fb.summary)) {
-        summaryArray = fb.summary;
-    } else if (typeof fb.summary === "string") {
-        // If stored as JSON array string, parse
-        if (fb.summary.trim().startsWith("[")) {
-            try {
-                summaryArray = JSON.parse(fb.summary);
-            } catch {
-                summaryArray = [fb.summary]; // fallback
-            }
-        } else {
-            summaryArray = [fb.summary]; // plain text → single item
+    // If feedback is stored as JSON string, parse it
+    if (typeof feedbackData === 'string') {
+        try {
+            feedbackData = JSON.parse(feedbackData);
+        } catch (e) {
+            console.error("Failed to parse feedback:", e);
+            feedbackData = {};
         }
+    }
+
+    // Get the rating object - handle nested structure
+    const rating = feedbackData?.rating || feedbackData?.feedback?.rating || {};
+    const averageScore = feedbackData?.averageScore || 0;
+    const recommendation = feedbackData?.recommendation || feedbackData?.Recommendation || "No";
+    const recommendationMsg = feedbackData?.recommendationMsg || feedbackData?.RecommendationMsg || "No feedback available";
+
+    // Handle summary - convert to array if needed
+    let summaryArray = [];
+    const summary = feedbackData?.summary || feedbackData?.feedback?.summary || "";
+
+    if (Array.isArray(summary)) {
+        summaryArray = summary;
+    } else if (typeof summary === "string" && summary.trim()) {
+        summaryArray = [summary]; // plain text → single item
     }
 
 
@@ -77,28 +86,28 @@ function FeedbackDialog({ candidate }) {
                                     {/* Right: action */}
                                     <div className="flex gap-10 items-center">
                                         <h2 className="text-sm font-bold text-primary">
-                                            7/10
+                                            {averageScore}/10
                                         </h2>
                                     </div>
                                 </div>
                                 <div className="mt-5">
-                                    <h2 className="font-bold mt-2">Skills Assisment</h2>
+                                    <h2 className="font-bold mt-2">Skills Assessment</h2>
                                     <div className="mt-3 grid grid-cols-2 gap-10">
                                         <div >
-                                            <h2 className="flex justify-between"> Technical Skills <span>{feedback?.rating.technicalSkills}/10</span></h2>
-                                            <Progress value={feedback?.rating.technicalSkills * 10} max={10} className="mt-1" />
+                                            <h2 className="flex justify-between"> Technical Skills <span>{rating?.technicalSkills || 0}/10</span></h2>
+                                            <Progress value={(rating?.technicalSkills || 0) * 10} max={100} className="mt-1" />
                                         </div>
                                         <div >
-                                            <h2 className="flex justify-between"> Communication Skills <span>{feedback?.rating.communication}/10</span></h2>
-                                            <Progress value={feedback?.rating.technicalSkills * 10} max={10} className="mt-1" />
+                                            <h2 className="flex justify-between"> Communication Skills <span>{rating?.communication || 0}/10</span></h2>
+                                            <Progress value={(rating?.communication || 0) * 10} max={100} className="mt-1" />
                                         </div>
                                         <div >
-                                            <h2 className="flex justify-between"> Problem Solving <span>{feedback?.rating.problemSolving}/10</span></h2>
-                                            <Progress value={feedback?.rating.technicalSkills * 10} max={10} className="mt-1" />
+                                            <h2 className="flex justify-between"> Problem Solving <span>{rating?.problemSolving || 0}/10</span></h2>
+                                            <Progress value={(rating?.problemSolving || 0) * 10} max={100} className="mt-1" />
                                         </div>
                                         <div >
-                                            <h2 className="flex justify-between"> Experience  <span>{feedback?.rating.experience}/10</span></h2>
-                                            <Progress value={feedback?.rating.experience * 10} max={10} className="mt-1" />
+                                            <h2 className="flex justify-between"> Experience  <span>{rating?.experience || 0}/10</span></h2>
+                                            <Progress value={(rating?.experience || 0) * 10} max={100} className="mt-1" />
                                         </div>
                                     </div>
                                 </div>
@@ -118,12 +127,12 @@ function FeedbackDialog({ candidate }) {
                                     </div>
                                 </div>
 
-                                <div className={`p-4 mt-10 flex items-center justify-between rounded-md ${feedback?.Recommendation == 'No' ? 'bg-red-100' : 'bg-green-100'}`}>
+                                <div className={`p-4 mt-10 flex items-center justify-between rounded-md ${recommendation === 'No' || recommendation === false ? 'bg-red-100' : 'bg-green-100'}`}>
                                   <div className="">
-                                      <h2 className={`font-bold ${feedback?.Recommendation == 'No' ? 'text-red-800' : 'text-green-800'}`}>Recommendation Msg:</h2>
-                                        <p className={`mt-1 ${feedback?.Recommendation == 'No' ? 'text-red-600' : 'text-green-600'}`}>{feedback?.RecommendationMsg}</p>
+                                      <h2 className={`font-bold ${recommendation === 'No' || recommendation === false ? 'text-red-800' : 'text-green-800'}`}>Recommendation Msg:</h2>
+                                        <p className={`mt-1 ${recommendation === 'No' || recommendation === false ? 'text-red-600' : 'text-green-600'}`}>{recommendationMsg}</p>
                                     </div>
-                                    <Button  className={`mt-1 cursor-pointer ${feedback?.Recommendation == 'No' ? 'bg-red-600' : 'bg-green-600'}`}>Send Message</Button>
+                                    <Button  className={`mt-1 cursor-pointer ${recommendation === 'No' || recommendation === false ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}>Send Message</Button>
                                     </div>
 
 

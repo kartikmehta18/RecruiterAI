@@ -4,6 +4,23 @@ import moment from "moment";
 import FeedbackDialog from "./FeedbackDialog"
 
 function CandidateList({ detail = [] }) {
+  // Helper function to extract average score from feedback
+  const getAverageScore = (candidate) => {
+    let feedbackData = candidate?.feedback;
+
+    // If feedback is stored as JSON string, parse it
+    if (typeof feedbackData === 'string') {
+      try {
+        feedbackData = JSON.parse(feedbackData);
+      } catch (e) {
+        return "—";
+      }
+    }
+
+    const averageScore = feedbackData?.averageScore || feedbackData?.feedback?.averageScore;
+    return averageScore ? `${averageScore}/10` : "—";
+  };
+
   return (
     <div>
       <h3 className="my-5 text-2xl font-bold">
@@ -42,7 +59,7 @@ function CandidateList({ detail = [] }) {
           {/* Right: action */}
           <div className="flex gap-10 items-center">
             <h2 className="text-sm font-bold text-green-500">
-              7/10
+              {getAverageScore(candidate)}
             </h2>
             <FeedbackDialog candidate={candidate} />
           </div>

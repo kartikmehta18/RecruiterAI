@@ -90,22 +90,41 @@ interviewQuestions = [
 The goal is to create a structured, relevant, and time-optimized interview plan for a {{jobTitle}} role.`;
 
 
-export const FEEDBACK_PROMPT = `{{conversation}}
-Depends on this Interview Conversation between assistant and user,
-Give me feedback for user interview. Give me rating out of 10 for technical Skills,
-Communication, Problem Solving, Experience. Also give me summery in 3 lines
-about the interview and one line to let me know whether is recommanded
-for hire or not with msg. Give me response in JSON format
+export const FEEDBACK_PROMPT = `
+Interview Conversation:
+{{conversation}}
+
+CRITICAL: You MUST analyze the conversation above and provide feedback for this SPECIFIC candidate, not a generic example.
+
+INSTRUCTIONS:
+1. Carefully analyze EVERY response the candidate gave to interview questions
+2. Evaluate based on:
+   - Technical understanding and depth of knowledge displayed
+   - Quality of communication (clarity, articulation)
+   - Problem-solving approach and reasoning
+   - Relevant experience mentioned
+3. Rate EACH category from 1-10 based ONLY on what the candidate actually said:
+   - technicalSkills: How well did they demonstrate technical knowledge?
+   - communication: How clear and articulate were their responses?
+   - problemSolving: How logical and structured was their thinking?
+   - experience: How relevant is their experience to the role?
+4. Calculate the exact average of these 4 ratings
+5. If average >= 6, recommendation is "Yes", otherwise "No"
+6. Create a 3-line summary of their actual performance (SPECIFIC to this candidate, not generic)
+
+IMPORTANT: Return ONLY valid JSON, no markdown, no explanations, strict format:
 {
-   feedback:{
-      rating:{
-         techicalSkills:5,
-         communication:6,
-         problemSolving:4,
-         experince:7
-      },
-      summery:<in 3 Line>,
-      Recommendation:"" (in "Yes/No") ,
-      RecommendationMsg:""
-   }
-}`
+  "feedback": {
+    "rating": {
+      "technicalSkills": <number 1-10 based on candidate's actual responses>,
+      "communication": <number 1-10 based on candidate's actual responses>,
+      "problemSolving": <number 1-10 based on candidate's actual responses>,
+      "experience": <number 1-10 based on candidate's actual responses>
+    },
+    "summary": "<3 lines specifically about THIS candidate's performance>",
+    "averageScore": <calculated average>,
+    "recommendation": "<Yes or No>",
+    "recommendationMsg": "<specific message about their performance>"
+  }
+}
+`
