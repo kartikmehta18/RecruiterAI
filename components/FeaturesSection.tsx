@@ -9,7 +9,7 @@ export default function FeaturesSection() {
                 {/* Section Heading */}
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Powerful AI Features for Modern Hiring
+                        AI Features for<i className="ml-2 italic font-caramel text-primary"> Modern Hiring</i>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                         RecruiterAI combines cutting-edge artificial intelligence with intuitive design to revolutionize your recruitment process. Screen, interview, and hire the best talent faster than ever.

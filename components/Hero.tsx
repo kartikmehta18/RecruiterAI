@@ -851,6 +851,7 @@ import {
 import FeaturesSection from "./FeaturesSection";
 import IntegrationsSection from "./IntegrationsSection";
 import TestimonialsSection from "./ui/testimonial-v2";
+import FooterSection from "./FooterSection";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -1992,6 +1993,9 @@ const InteractiveHero: React.FC = () => {
           Made with ❤️& ☕by <a className="text-primary font-caramel" target="_blank" href="kartikmehta18.xyz">kartimehta18.xyz</a>
         </div> */}
       </main>
+
+      {/* Footer Section */}
+      <FooterSection />
     </div>
   );
 };
